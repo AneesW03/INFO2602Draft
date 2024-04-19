@@ -5,9 +5,29 @@
 {{ super() }}
 
 {% block content %}
-    <h1>Flask MVC</h1>
     {% if is_authenticated %}
-        <p> Welcome {{current_user.username}} </p>
+
+    <table>
+     <thead>
+        <tr>
+         <th>Internship Title</th>
+         <th>Company Name</th>
+         <th>Location</th>
+         <th>Start Date</th>
+         <th>Duration</th>
+         <th>Stipend</th>
+            </tr>
+          </thead>
+          <tbody>
+    {% for internship in internships %}
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+          </tr>
+    {% endfor %}
+        </tbody>
+      </table>
+            
     {% endif %}
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
 {% endblock %}
