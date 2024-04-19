@@ -34,3 +34,4 @@ def create_user_endpoint():
     data = request.json
     user = create_user(data['username'], data['password'])
     return jsonify({'message': f"user {user.username} created with id {user.id}"})
+
