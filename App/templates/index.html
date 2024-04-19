@@ -7,27 +7,19 @@
 {% block content %}
     {% if is_authenticated %}
 
-    <table>
-     <thead>
-        <tr>
-         <th>Internship Title</th>
-         <th>Company Name</th>
-         <th>Location</th>
-         <th>Start Date</th>
-         <th>Duration</th>
-         <th>Stipend</th>
-            </tr>
-          </thead>
-          <tbody>
+    
+    <ul class="pagination"></ul>
     {% for internship in internships %}
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
+        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="active"><a href="#!">1</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
+        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">4</a></li>
+        <li class="waves-effect"><a href="#!">5</a></li>
+        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
     {% endfor %}
-        </tbody>
-      </table>
+    </ul>
+  
             
     {% endif %}
 {% endblock %}

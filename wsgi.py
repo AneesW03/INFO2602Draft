@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, get_all_internships, parse_internships )
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -17,6 +17,7 @@ def initialize():
     db.drop_all()
     db.create_all()
     create_user('bob', 'bobpass')
+    parse_internships()
     print('database intialized')
 
 '''
@@ -67,3 +68,14 @@ def user_tests_command(type):
     
 
 app.cli.add_command(test)
+
+
+internship_cli = AppGroup('internship', help='List all Intership Titles')
+
+@internship_cli.command("list")
+def list_internships():
+    internships = get_all_internships()
+    for internship in internships:
+        print(internship.title)
+
+app.cli.add_command(internship_cli)
