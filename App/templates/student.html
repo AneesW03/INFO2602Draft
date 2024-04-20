@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Flask MVC App{% endblock %}
+{% block page %}Flask MVC App{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+{% if is_authenticated %}
+<div class="row">
+    {% for internship in internships %}
+    <div class="col s12 m4">
+      <div class="card medium blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{internship.title}}</span>
+          <p>{{internship.company_name}}</p>
+          <p>{{internship.location}}</p>
+          <p>{{internship.start_date}}</p>
+          <p>{{internship.duration}}</p>
+          <p>{{internship.stipend}}</p>
+        </div>
+        <div class="card-action">
+          <form method="POST" action="/apply/{{internship.id}}">
+            <input type="submit" value="APPLY">
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

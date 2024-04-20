@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block title %}App Users{% endblock %}
+{% block page %}App Users{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+    <div class="row">
+        <p style="text-align: center;">
+          LIST NEW INTERNSHIP
+        </p>
+    </div>
+
+    <div class="row">
+      <form class="col s12" method="POST" action="/create_internship">
+        
+        <div class="row">
+          <div class="input-field col s4">
+            <input placeholder="Title" name="internship_title" type="text" class="validate">
+            <label for="internship_title">Internship Title</label>
+          </div>
+          <div class="input-field col s4">
+            <input placeholder="Company Name" name="company_name" type="text" class="validate">
+            <label for="company_name">Company Name</label>
+          </div>
+          <div class="input-field col s4">
+            <input placeholder="Location" name="location" type="text" class="validate">
+            <label for="location">Location</label>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="input-field col s4">
+            <input placeholder="Start Date" name="start_date" type="text" class="validate">
+            <label for="start_date">Start Date</label>
+          </div>
+          <div class="input-field col s4">
+            <input placeholder="Duration" name="duration" type="text" class="validate">
+            <label for="duration">Duration</label>
+          </div>
+          <div class="input-field col s4">
+            <input placeholder="Stipend" name="stipend" type="text" class="validate">
+            <label for="stipend">Stipend</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light right purple" type="submit" name="action">Submit</button>
+          </div>
+        </div> 
+
+      </form>
+    </div>
+
+      <div class="row">
+        {% for internship in internships %}
+        <div class="col s12 m4">
+          <div class="card medium blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">{{internship.title}}</span>
+              <p>{{internship.company_name}}</p>
+              <p>{{internship.location}}</p>
+              <p>{{internship.start_date}}</p>
+              <p>{{internship.duration}}</p>
+              <p>{{internship.stipend}}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">APPLY</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+{% endblock %}

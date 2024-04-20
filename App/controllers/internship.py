@@ -39,6 +39,9 @@ def get_internship(id):
 def get_all_internships():
     return Internship.query.all()
 
+def get_internships_by_company_name(company_name):
+    return Internship.query.filter_by(company_name=company_name).all()
+
 def get_all_internships_json():
     internships = Internship.query.all()
     if not internships:

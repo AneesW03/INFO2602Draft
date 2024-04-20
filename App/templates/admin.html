@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block page %}{{title}}{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+<div class="row">
+    {% for application in applications %}
+    <div class="col s12 m4">
+      <div class="card medium blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{application.internship.title}}</span>
+          <p>{{application.user.username}}</p>
+          <p> {{application.status.value}} </p> 
+        </div>
+        <div class="card-action" style="display: flex; justify-content: center;">
+          <form action="/accept/{{application.id}}" method="POST" style="margin: auto;">
+            <input type="submit" value="ACCEPT">
+          </form>
+          <form action="/decline/{{application.id}}" method="POST" style="margin: auto;">
+            <input type="submit" value="DECLINE">
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
