@@ -18,8 +18,8 @@ def initialize():
     create_user('bob', 'bobpass', 'STUDENT', None)
     create_user('comp', 'comppass', 'COMPANY', 'T&T')
     create_user('adm', 'admpass', 'ADMIN', None)
-    parse_internships()
-    create_companies()
+    #parse_internships()
+    #create_companies()
     print('database intialized')
 
 '''
