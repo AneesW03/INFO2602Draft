@@ -9,7 +9,7 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def init():
     db.drop_all()
     db.create_all()
-    create_user('bob', 'bobpass')
+    create_user('bob', 'bobpass','STUDENT', None)
     parse_internships()
     create_companies()
     return jsonify(message='db initialized!')
