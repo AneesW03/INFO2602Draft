@@ -19,16 +19,17 @@ def create_internship(title, company_name, location, start_date, duration, stipe
 def parse_internships():
     with open('internship.csv') as file:
         reader = csv.DictReader(file)
+        newInternships = []
         for row in reader:
-            newInternship = Internship(
+            newInternships.append( Internship(
                 title = row['internship_title'],
                 company_name = row['company_name'],
                 location = row['location'],
                 start_date = row['start_date'],
                 duration = row['duration'],
                 stipend = row['stipend']
-            )
-            db.session.add(newInternship)
+            ))
+        db.session.add_all(newInternships)
         db.session.commit()
 
 def get_internship_by_title(internship_title):
