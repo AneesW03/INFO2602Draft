@@ -1,11 +1,9 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
+from flask import Blueprint, redirect, render_template, request, jsonify
 from App.models import db
 from App.controllers import (create_user, get_all_internships, parse_internships)
-from flask_jwt_extended import jwt_required, current_user as jwt_current_user
+from flask_jwt_extended import jwt_required, current_user
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
-
-# properly displays all internships in cards
 
 @index_views.route('/init', methods=['GET'])
 def init():

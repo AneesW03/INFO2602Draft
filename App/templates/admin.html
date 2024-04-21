@@ -5,25 +5,148 @@
 {{ super() }}
 
 {% block content %}
+<style>
+  #applications-container {
+    margin: 0px 0px 0px 0px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 2px 2px 2px 2px;
+    background-color: none;
+    width: 25vw;
+    height: 95vh;
+  }
+
+  .list-title {
+    font-size: var(--list-font-size);
+    text-align: center;
+    padding: 0.1rem;
+    border: 2px solid #000;
+    background-color: whitesmoke;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .application-list {
+    margin: 0;
+    height: 92vh;
+    overflow-y: scroll;
+  }
+
+  .application-list li {
+    font-size: var(--list-font-size) !important;
+    padding: var(--list-padding-size) !important;
+    margin-bottom: 0.5rem;
+    background-color: black;
+    border-radius: 1.5rem;
+    color: white;
+  }
+
+  .application-list li:hover {
+    background-color: gray;
+  }
+
+  .row {
+    width: 75vw;
+    height: 95vh;
+  }
+
+  .col {
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .row .card {
+    width: var(--card-size);
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  .row .card-action input {
+    color: white;
+  }
+
+  .row .card-action button {
+    position: relative;
+    left: 20%;
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      --heading-font-size: 1.5rem;
+      --list-font-size: 0.8rem;
+      --card-size: 90%;
+      --card-title-font-size: 0.75rem;
+      --card-content-font-size: 0.6rem;
+      --list-padding-size: 0.25rem
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    :root {
+      --heading-font-size: 1.25rem;
+      --list-font-size: 1rem;
+      --card-size: 75%;
+      --card-title-font-size: 0.875rem;
+      --card-content-font-size: 0.75rem;
+      --list-padding-size: 0.5rem
+    }
+  }
+
+  @media (min-width: 992px) {
+    :root {
+    --heading-font-size: 1.4rem;
+    --text-font-size: 1rem;
+    --card-size: 50%;
+    --card-title-font-size: 1rem;
+    --card-content-font-size: 0.875rem;
+    --list-padding-size: 0.75rem
+    }
+  }
+</style>
+
+
+<div id="applications-container">
+  <div class="list-title">New Applications</div>
+    <ul class="application-list">
+        {% for application in applications %}
+        <a href="/home/{{application.id}}"><li>{{application.internship.title}} - {{application.internship.company_name}}</li></a>
+        {% endfor %}
+    </ul>
+  </div>
+
 <div class="row">
-    {% for application in applications %}
-    <div class="col s12 m4">
-      <div class="card medium blue-grey darken-1">
+    {% if selected_application %}
+    <div class="col s12 m12 l12">
+      <div class="card large black">
         <div class="card-content white-text">
-          <span class="card-title">{{application.internship.title}}</span>
-          <p>{{application.user.username}}</p>
-          <p> {{application.status.value}} </p> 
+          <p>
+            <span class="card-title">{{selected_application.internship.title}}</span> <br>
+            <span>Company: {{selected_application.internship.company_name}}</span> <br>
+            <span>Location: {{selected_application.internship.location}}</span> <br>
+            <span>Start Date: {{selected_application.internship.start_date}}</span> <br>
+            <span>Duration: {{selected_application.internship.duration}}</span> <br>
+            <span>Stipend: {{selected_application.internship.stipend}}</span> <br>
+            <span>Applicand Username: {{selected_application.user.username}}</span> <br>
+            <span>Application Status: {{selected_application.status.value}}</span> <br>
+            {% if selected_application.student_text %}
+            <span>Applicand Comments: {{selected_application.student_text}}</span> <br>
+            {% endif %}
+            {% if selected_application.admin_text %}
+            <span>Admin Comments: {{selected_application.admin_text}}</span> <br>
+          </p>
+          {% endif %}
         </div>
         <div class="card-action" style="display: flex; justify-content: center;">
-          <form action="/accept/{{application.id}}" method="POST" style="margin: auto;">
-            <input type="submit" value="ACCEPT">
-          </form>
-          <form action="/decline/{{application.id}}" method="POST" style="margin: auto;">
-            <input type="submit" value="DECLINE">
+          <form action="/response/{{selected_application.id}}" method="POST" style="margin: auto;">
+            <input type="text" name="admin_text" placeholder="Comments">
+            <button class="waves-effect waves-light btn" type="submit" name="decision" value="ACCEPT">ACCEPT<i class="material-icons right">send</i></button>
+            <button class="waves-effect waves-light btn" type="submit" name="decision" value="DECLINE">DECLINE<i class="material-icons right">send</i></button>
           </form>
         </div>
       </div>
     </div>
-    {% endfor %}
-  </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -5,17 +5,13 @@ from.index import index_views
 
 from App.controllers import (
     login,
-    get_all_internships
+    get_all_users
 )
 
 from App.models import Role
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
-
-
-'''
-Page/Action Routes
-'''    
+   
 @auth_views.route('/users', methods=['GET'])
 def get_user_page():
     users = get_all_users()
@@ -26,10 +22,12 @@ def get_user_page():
 def identify_page():
     return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
 
+# Redirects to the default page where a user can login
 @auth_views.route('/', methods=['GET'])
 def login_page():
-    return render_template('layout.html')    
+    return render_template('login.html')    
 
+# Authenticates a user and redirects them to their home page
 @auth_views.route('/login', methods=['POST'])
 def login_action():
     data = request.form
@@ -38,6 +36,7 @@ def login_action():
     set_access_cookies(response, token) 
     return response
 
+# Allows a user to logout of the application
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
     response = redirect(url_for('auth_views.login_page')) 

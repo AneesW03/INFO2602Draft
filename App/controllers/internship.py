@@ -1,6 +1,7 @@
 import csv
 from App.models import Internship
 from App.database import db
+from sqlalchemy import func
 
 def create_internship(title, company_name, location, start_date, duration, stipend):
     newInternship = Internship(
@@ -48,3 +49,6 @@ def get_all_internships_json():
         return []
     internships = [internship.get_json() for internship in internships]
     return internships
+
+def search_internships(searchString):
+    return Internship.query.filter(func.lower(Internship.title).like(f'%{searchString.lower()}%')).all()

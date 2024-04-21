@@ -5,27 +5,203 @@
 {{ super() }}
 
 {% block content %}
+
+<style>
+  #applications-container {
+    margin: 0px 0px 0px 0px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 2px 2px 2px 2px;
+    background-color: none;
+    width: 25vw;
+    height: 95vh;
+  }
+
+  .list-title {
+    font-size: var(--list-font-size);
+    text-align: center;
+    padding: 0.1rem;
+    margin-bottom: 1rem;
+    border: 2px solid #000;
+    border-radius: 0.5rem;
+    background-color: whitesmoke;
+  }
+
+  .application-list {
+    margin: 0;
+    height: 60%;
+    overflow-y: scroll;
+  }
+
+  .application-list li {
+    font-size: var(--list-font-size) !important;
+    padding: var(--list-padding-size) !important;
+    margin-bottom: 0.5rem;
+    background-color: black;
+    border-radius: 1.5rem;
+    color: white;
+  }
+
+  .application-list li:hover {
+    background-color: gray;
+  }
+
+  #applications-container .card {
+    width: auto;
+    height: auto;
+    margin-top: 2em;
+  }
+
+  #applications-container .card-title {
+    font-size: var(--card-title-font-size) !important;
+    line-height: normal;
+    margin-bottom: 1em;
+  }
+
+  #applications-container .card-content {
+    font-size: var(--card-content-font-size) !important;
+  }
+
+  .row {
+    width: 75vw;
+    height: 89vh;
+    overflow-y: scroll;
+  }
+
+  .content-container {
+    display: flex;
+  }
+
+  .searchform input[type="search"] {
+    border: none;
+  }
+
+  .searchform {
+    margin: 1em;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  .searchform input[type="search"]::placeholder {
+    color: black;
+  }
+
+  .row .card-title {
+    font-size: var(--heading-font-size) !important;
+  }
+
+  .card .card-content {
+    padding: 0.5em !important;
+  }
+
+  .card {
+    background-color: black;
+  }
+
+  .row .card-action input[type="text"] {
+    color: white;
+  }
+
+  .card {
+    border-radius: 1.5rem;
+    overflow: hidden;
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      --heading-font-size: 1.5rem;
+      --list-font-size: 0.8rem;
+      --card-title-font-size: 0.75rem;
+      --card-content-font-size: 0.6rem;
+      --list-padding-size: 0.25rem
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    :root {
+      --heading-font-size: 1.25rem;
+      --list-font-size: 1rem;
+      --card-title-font-size: 0.875rem;
+      --card-content-font-size: 0.75rem;
+      --list-padding-size: 0.5rem
+    }
+  }
+
+  @media (min-width: 992px) {
+    :root {
+    --heading-font-size: 1.4rem;
+    --text-font-size: 1rem;
+    --card-title-font-size: 1rem;
+    --card-content-font-size: 0.875rem;
+    --list-padding-size: 0.75rem
+    }
+  }
+</style>
+
 {% if is_authenticated %}
-<div class="row">
-    {% for internship in internships %}
-    <div class="col s12 m4">
-      <div class="card medium blue-grey darken-1">
+  <div id="applications-container">
+  <div class="list-title">Student Applications</div>
+    <ul class="application-list">
+        {% for application in current_user.application %}
+        <a href="/home/{{application.id}}"><li>{{application.internship.title}} - {{application.internship.company_name}}</li></a>
+        {% endfor %}
+    </ul>
+    {% if selected_application %}
+      <div class="card large" style="margin-top: 5%; height: 35%;">
         <div class="card-content white-text">
-          <span class="card-title">{{internship.title}}</span>
-          <p>{{internship.company_name}}</p>
-          <p>{{internship.location}}</p>
-          <p>{{internship.start_date}}</p>
-          <p>{{internship.duration}}</p>
-          <p>{{internship.stipend}}</p>
+          <span class="card-title flow-text">{{selected_application.internship.title}}</span>
+          <p>
+            <span>Company: {{selected_application.internship.company_name}}</span> <br>
+            <span>Location: {{selected_application.internship.location}}</span> <br>
+            <span>Start Date: {{selected_application.internship.start_date}}</span> <br>
+            <span>Duration: {{selected_application.internship.duration}}</span> <br>
+            <span>Stipend: {{selected_application.internship.stipend}}</span> <br>
+            <span>Application Status: {{selected_application.status.value}}</span> <br>
+            <span>Applicand Comment: {{selected_application.student_text}}</span> <br>
+            {% if selected_application.admin_text %}
+            <span>Admin Comment: {{selected_application.admin_text}}</span> <br>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      {% endif %}
+  </div>
+
+<div style="display: flex; flex-direction: column;">
+  <div class="search-container">
+    <form class="searchform" method="POST" action="/search">
+      <input name="search" class="search-form" type="search" placeholder="Search" required>
+      <button type="submit" style="border: none; background-color: #a0d2eb;">
+        <i class="material-icons">search</i>
+      </button>
+    </form>
+  </div>
+  <div class="row">
+    {% for internship in internships %}
+    <div class="col s12 m4 l3">
+      <div class="card medium">
+        <div class="card-content white-text">
+          <span class="card-title flow-text">{{internship.title}}</span>
+          <p>
+            <span>Company: {{internship.company_name}}</span> <br>
+            <span>Location: {{internship.location}}</span> <br>
+            <span>Start Date: {{internship.start_date}}</span> <br>
+            <span>Duration: {{internship.duration}}</span> <br>
+            <span>Stipend: {{internship.stipend}}</span> <br>
+          </p>
         </div>
         <div class="card-action">
           <form method="POST" action="/apply/{{internship.id}}">
-            <input type="submit" value="APPLY">
+            <input type="text" name="student_text" placeholder="Comments">
+            <button class="waves-effect waves-light btn" type="submit">APPLY<i class="material-icons right">send</i></button>
           </form>
         </div>
       </div>
     </div>
     {% endfor %}
   </div>
+</div>
 {% endif %}
 {% endblock %}
