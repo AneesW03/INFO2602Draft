@@ -10,14 +10,15 @@ def create_user(username, password, role, company_name):
 def create_companies():
     counter = 0
     internships = Internship.query.group_by(Internship.company_name).distinct(Internship.company_name).all()
+    newUsers = []
     for internship in internships:
         username = f"comp{counter}"
         counter += 1
-        newUser = User(username = username, 
+        newUsers.append(User(username = username, 
                     password = 'comppass',
                     role = 'COMPANY',
-                    company_name = internship.company_name)
-        db.session.add(newUser)
+                    company_name = internship.company_name))
+    db.session.add_all(newUsers)
     db.session.commit()
 
 def get_user_by_username(username):
