@@ -16,7 +16,6 @@ def initialize():
     db.drop_all()
     db.create_all()
     create_user('bob', 'bobpass', 'STUDENT', None)
-    create_user('comp', 'comppass', 'COMPANY', 'T&T')
     create_user('adm', 'admpass', 'ADMIN', None)
     parse_internships()
     create_companies()
