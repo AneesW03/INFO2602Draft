@@ -36,7 +36,7 @@ def home_page(id=None):
         applications = get_all_applications()
         return render_template('admin.html', applications=applications, selected_application=selected_application)
 
-@user_views.route('/search', methods=['POST'])
+@user_views.route('/home', methods=['POST'])
 @jwt_required()
 def search_action():
     data = request.form
