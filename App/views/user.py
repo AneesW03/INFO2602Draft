@@ -57,8 +57,11 @@ def create_internship_action():
 @jwt_required()
 def add_application_action(id):
     data = request.form
-    create_application(current_user.id, id, data['student_text'], 'AWAITING_RESPONSE')
-    flash('Application Submitted Successfully')
+    result = create_application(current_user.id, id, data['student_text'], 'AWAITING_RESPONSE')
+    if result:
+        flash('Application Submitted Successfully')
+    else:
+        flash('Error, Only One Application Allowed')
     return redirect(request.referrer)
 
 # Allows an admin to accept or decline a student's application for an internship

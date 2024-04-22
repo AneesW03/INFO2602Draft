@@ -12,16 +12,6 @@ from App.models import Role
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
    
-@auth_views.route('/users', methods=['GET'])
-def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
-
-@auth_views.route('/identify', methods=['GET'])
-@jwt_required()
-def identify_page():
-    return render_template('message.html', title="Identify", message=f"You are logged in as {current_user.id} - {current_user.username}")
-
 # Redirects to the default page where a user can login
 @auth_views.route('/', methods=['GET'])
 def login_page():

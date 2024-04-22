@@ -2,6 +2,9 @@ from App.models import Application, Status
 from App.database import db
 
 def create_application(student_id, internship_id, student_text, status):
+    application = Application.query.filter_by(internship_id = internship_id, student_id = student_id).first()
+    if application:
+        return False
     newApplication = Application(
         student_id = student_id,
         internship_id = internship_id,
@@ -11,7 +14,7 @@ def create_application(student_id, internship_id, student_text, status):
     )
     db.session.add(newApplication)
     db.session.commit()
-    return newApplication
+    return True
 
 def get_application(id):
     return Application.query.get(id)

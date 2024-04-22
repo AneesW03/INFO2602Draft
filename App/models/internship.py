@@ -17,14 +17,3 @@ class Internship(db.Model):
         self.start_date = start_date
         self.duration = duration
         self.stipend = stipend
-
-    def get_json(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "company_name": self.company_name,
-            "location": self.location,
-            "start_date": self.start_date,
-            "duration": self.duration,
-            "stipend": self.stipend
-        }

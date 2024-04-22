@@ -21,13 +21,3 @@ class Application(db.Model):
         self.student_text = student_text
         self.admin_text = admin_text
         self.status = status
-    
-    def get_json(self):
-        return {
-            'id': self.id,
-            'student_id': self.student_id,
-            'internship_id': self.internship_id,
-            'student_text': self.student_text,
-            'admin_text': self.admin_text,
-            'status': self.status
-        }

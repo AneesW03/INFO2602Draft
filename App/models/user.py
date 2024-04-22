@@ -20,13 +20,6 @@ class User(db.Model):
         self.set_password(password)
         self.role = role
         self.company_name = company_name
-    
-    def get_json(self):
-        return{
-            'id': self.id,
-            'username': self.username,
-            'role': self.role
-        }
 
     def set_password(self, password):
         """Create hashed password."""

@@ -35,17 +35,20 @@
   }
 
   .card {
-    background-color: black;
+    border-radius: 1rem;
+  }
+
+  .card-content .heading {
+    font-weight: bold;
+    color: lightgray;
   }
 
   
 </style>
 
-    <div class="row">
-        <p style="text-align: center;">
+        <p style="text-align: center; font-weight: bold; font-size: 2rem;">
           {{current_user.company_name}}
         </p>
-    </div>
 
     <div class="form-container">
       <form class="col s12" method="POST" action="/create_internship">
@@ -72,7 +75,7 @@
             <label for="stipend">Stipend</label>
           </div>
           <div class="input-field col s12 m6 l4" style="display: flex; justify-content: center;">
-            <button class="waves-effect waves-light btn-large purple" type="submit" name="action">
+            <button class="waves-effect waves-light btn-large green accent-4" type="submit" name="action">
               <i class="material-icons right">send</i>Submit</button>
           </div>
         </div> 
@@ -82,16 +85,16 @@
 
       <div class="row" style="width: 90vw; height: 65vh; align-self: center; margin: 0; overflow-y: scroll; margin-top: 1em;">
         {% for internship in internships %}
-        <div class="col s12 m4 l3">
-          <div class="card medium">
+        <div class="col s12 m6 l4">
+          <div class="card medium blue-grey darken-4">
             <div class="card-content white-text">
               <span class="card-title">{{internship.title}}</span>
               <p>
-                <span>Company: {{internship.company_name}}</span> <br>
-                <span>Location: {{internship.location}}</span> <br>
-                <span>Start Date: {{internship.start_date}}</span> <br>
-                <span>Duration: {{internship.duration}}</span> <br>
-                <span>Stipend: {{internship.stipend}}</span> <br>
+                <span><span class="heading"> Company: </span>{{internship.company_name}}</span> <br>
+                <span><span class="heading"> Location: </span>{{internship.location}}</span> <br>
+                <span><span class="heading"> Start Date: </span>{{internship.start_date}}</span> <br>
+                <span><span class="heading"> Duration: </span>{{internship.duration}}</span> <br>
+                <span><span class="heading"> Stipend: </span> {{internship.stipend}}</span> <br>
               </p>
             </div>
           </div>
