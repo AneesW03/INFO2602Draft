@@ -33,7 +33,7 @@ def parse_internships():
         db.session.commit()
 
 def get_internship_by_title(internship_title):
-    return Internship.query.filter_by(internship_title=internship_title).all()
+    return Internship.query.filter_by(title=internship_title).all()
 
 def get_internship(id):
     return Internship.query.filter_by(id=id).first()

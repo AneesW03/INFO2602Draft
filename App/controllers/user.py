@@ -9,7 +9,7 @@ def create_user(username, password, role, company_name):
 
 def create_companies():
     counter = 0
-    internships = Internship.query.group_by(Internship.company_name).distinct(Internship.company_name).all()
+    internships = Internship.query.distinct(Internship.company_name).all()
     newUsers = []
     for internship in internships:
         username = f"comp{counter}"
